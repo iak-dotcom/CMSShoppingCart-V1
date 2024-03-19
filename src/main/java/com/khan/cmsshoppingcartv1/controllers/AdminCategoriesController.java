@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khan.cmsshoppingcartv1.models.CategoryRepository;
@@ -79,8 +81,10 @@ public class AdminCategoriesController {
         return "admin/categories/edit";
 
     }
+
     @PostMapping("/edit")
-    public String edit(@Valid Category category, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String edit(@Valid Category category, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+            Model model) {
 
         Category categoryCurrent = categoryRepo.getOne(category.getId());
 
@@ -96,7 +100,7 @@ public class AdminCategoriesController {
 
         Category categoryExists = categoryRepo.findByName(category.getName());
 
-        if ( categoryExists != null ) {
+        if (categoryExists != null) {
             redirectAttributes.addFlashAttribute("message", "Category exists, choose another");
             redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
 
@@ -108,6 +112,7 @@ public class AdminCategoriesController {
 
         return "redirect:/admin/categories/edit/" + category.getId();
     }
+
     @GetMapping("/delete/{id}")
     public String edit(@PathVariable int id, RedirectAttributes redirectAttributes) {
 
@@ -117,6 +122,22 @@ public class AdminCategoriesController {
         redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 
         return "redirect:/admin/categories";
-        
+
+    }
+
+    @PostMapping("/reorder")
+    public @ResponseBody String reorder(@RequestParam("id[]") int[] id) {
+
+        int count = 1;
+        Category category;
+
+        for (int categoryId : id) {
+            category = categoryRepo.getOne(categoryId);
+            category.setSorting(count);
+            categoryRepo.save(category);
+            count++;
+        }
+
+        return "ok";
     }
 }
