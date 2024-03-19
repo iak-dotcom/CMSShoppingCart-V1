@@ -13,6 +13,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     // For Sorting
     List<Category> findAllByOrderBySortingAsc();
 
+    //For Categories Controller
     Category findBySlug(String slug);
     
 }

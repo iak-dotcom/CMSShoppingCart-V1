@@ -20,12 +20,19 @@ import com.khan.cmsshoppingcartv1.models.data.Page;
 public class Common {
     @Autowired
     private PageRepository pageRepo;
-    
+    @Autowired
+    private CategoryRepository categoryRepo;
+
     @ModelAttribute
     public void sharedData(Model model){
      
 
+        
+
+        List<Category> categories = categoryRepo.findAllByOrderBySortingAsc();
         List<Page> pages = pageRepo.findAllByOrderBySortingAsc();
+        
+        model.addAttribute("ccategories", categories);
         model.addAttribute("cpages",pages);
     }
 }
