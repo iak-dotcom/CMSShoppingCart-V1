@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-     http
-        .authorizeRequests()
-        .antMatchers("/").permitAll()
-        .antMatchers("/**").hasAnyRole("USER");
+
+        http
+                .authorizeRequests()
+                .antMatchers("/category/**").hasAnyRole("USER")
+                .antMatchers("/").permitAll();
 
     }
 }
