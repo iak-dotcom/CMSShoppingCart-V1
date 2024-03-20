@@ -38,7 +38,7 @@
     <div th:replace="/fragments/footer"></div>
 
     <script>
-
+        // <!--csrf configuration-->
     let token = $("meta[name='_csrf']").attr("content");
     let header = $("meta[name='_csrf_header']").attr("content");
     $(document).ajaxSend(function (e, xhr, options) {
