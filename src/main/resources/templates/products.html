@@ -23,6 +23,7 @@
                         <h4 th:text="${product.name}"></h4>
                         <div class="desc" th:utext="${product.description}"></div>
                         <p th:text="'$' + ${product.price}"></p>
+                        <!-- For the cart-view Below -->
                         <div style="position: relative;">
                             <p>
                                 <a class="btn btn-primary addToCart" 
