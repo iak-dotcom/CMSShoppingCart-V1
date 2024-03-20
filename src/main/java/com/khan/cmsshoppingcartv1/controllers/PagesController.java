@@ -26,7 +26,7 @@ public class PagesController {
         
         return "page";
     }
-
+// For login page
     @GetMapping("/login")
     public String login() {
         return "login";
